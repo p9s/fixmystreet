@@ -121,4 +121,20 @@ sub contact_email {
 
 sub admin_user_domain { 'oxfordshire.gov.uk' }
 
+sub admin_pages {
+    my $self = shift;
+
+    my $user = $self->{c}->user;
+
+    my $pages = $self->next::method();
+
+    # Oxfordshire have a custom admin page for downloading reports in an Exor-
+    # friendly format which anyone with report_instruct permission can use.
+    if ( $user->is_superuser || $user->has_body_permission_to('report_instruct') ) {
+        $pages->{exordefects} = [ _('Download Exor RDI'), 10 ];
+    }
+
+    return $pages;
+}
+
 1;
