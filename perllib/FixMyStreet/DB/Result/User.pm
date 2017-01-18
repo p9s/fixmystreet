@@ -426,7 +426,7 @@ has initials => (
         my $self = shift;
         return unless $self->name;
         my @parts = split(" ", $self->name);
-        return join(" ", map { substr($_, 0, 1) } @parts);
+        return join("", map { substr($_, 0, 1) } @parts);
     },
 );
 
